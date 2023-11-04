@@ -1,4 +1,9 @@
+/**
+ * @author DucPTM
+ */
 
+ 
+package com.carmanagement;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -16,11 +21,7 @@ public class BrandList extends ArrayList <Brand> {
     Scanner scanner = new Scanner(System.in);
     PrintWriter pw;
     BufferedReader br;
-    ConstraintsOfBrand check;
-     ArrayList <Brand> list;
-    public BrandList(){
-        list = new ArrayList<>();
-    }
+
     public boolean loadFromFile (String fileName) throws IOException{
         try {
             br = new BufferedReader(new FileReader(fileName));
@@ -75,15 +76,21 @@ public class BrandList extends ArrayList <Brand> {
 
     //Add a new Brand to the list
     public void addBrand () {
+        boolean checkBrandID = false;
+        //System.out.println("Test: " + this.get(2).getBrandID());
         do {
             System.out.print("Input brand ID: ");
             brandID = scanner.nextLine();
-            pos = searchID (brandID);
-            if (pos != -1) {
-                break;
+            for (int i = 0; i < this.size(); i++) {
+                if (brandID.equals(this.get(i).getBrandID())) {
+                    checkBrandID = true;
+                    System.out.println("This brand ID is existed. Try another one!");
+                    break;
+                } else {
+                    checkBrandID = false;
+                }
             }
-            System.out.println("Not found !");
-        } while (true);
+        } while (checkBrandID == true);
         do {
             System.out.print("Input brand name: ");
             brandName = scanner.nextLine();
@@ -106,15 +113,14 @@ public class BrandList extends ArrayList <Brand> {
                 price = Double.parseDouble(scanner.nextLine());
                 if (price <= 0) {
                     System.out.println("The price must not be null. Try again !");
-                    price = 0;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("The price must be a number. Try again !");
                 price = 0;
             }
         } while (price == 0);
-        this.get(0).setUpdatedBrand(brandName, soundBrand, price);
-        System.out.println("Brand has updated successfully !");
+        this.add(new Brand(brandID, brandName, soundBrand, price));
+        System.out.println("Brand has added successfully");
     }
 
     //Update brand_name, sound_brand, price of an existed brand
