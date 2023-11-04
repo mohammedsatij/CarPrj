@@ -17,7 +17,10 @@ public class BrandList extends ArrayList <Brand> {
     PrintWriter pw;
     BufferedReader br;
     ConstraintsOfBrand check;
-
+     ArrayList <Brand> list;
+    public BrandList(){
+        list = new ArrayList<>();
+    }
     public boolean loadFromFile (String fileName) throws IOException{
         try {
             br = new BufferedReader(new FileReader(fileName));
