@@ -1,22 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author VICTUS
- */
-import java.lang.Comparable.*;
-public class Car {
-    String carID;
-String brand;
-String color;
-String frameID;
-String engineID;
 
-    public Car(String carID, String brand, String color, String frameID, String engineID) {
+
+public class Car implements Comparable <Car> {
+    private String carID, color, frameID, engineID;
+    public Brand brand;
+    public Car () {
+
+    }
+
+    public Car(String carID, Brand brand, String color, String frameID, String engineID) {
         this.carID = carID;
         this.brand = brand;
         this.color = color;
@@ -24,52 +16,51 @@ String engineID;
         this.engineID = engineID;
     }
 
-    public String getCarID() {
-        return carID;
-    }
-
-    public void setCarID(String carID) {
-        this.carID = carID;
-    }
-
-    public String getBrand() {
+    public Brand getBrand () {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public String getCarID () {
+        return carID;
     }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getFrameID() {
+    
+    public String getFrameID () {
         return frameID;
-    }
-
-    public void setFrameID(String frameID) {
-        this.frameID = frameID;
     }
 
     public String getEngineID() {
         return engineID;
     }
-
-    public void setEngineID(String engineID) {
+    
+    public void setUpdatedCar(Brand brand, String color, String frameID, String engineID) {
+        this.brand = brand;
+        this.color = color;
+        this.frameID = frameID;
         this.engineID = engineID;
     }
 
+    //Associating fields to a string for outputting a car to screen
+    public String screenString () {
+        return brand + "\n" + carID + "," + color + "," + frameID + "," + engineID;
+    }
+
+    //Used in the operation opf listing cars in ascending order of brand names
     @Override
-    public String toString() {
-        return "Car{" + "carID=" + carID + ", brand=" + brand + ", color=" + color + ", frameID=" + frameID + ", engineID=" + engineID + '}';
+    public int compareTo (Car car) {
+        int val = this.getBrand().getBrandName().compareTo(car.getBrand().getBrandName());
+        if (val == 0) {
+            val = this.getCarID().compareTo(car.getCarID());
+        }
+        return val;
     }
-    
-    public int compareTo(Car other) {
-        return this.carID.compareTo(other.carID);
+
+    //Associating fields to a string for writing a car to file
+    @Override
+    public String toString () {
+        return carID + "," + brand.getBrandID() + "," + color + "," + frameID + "," + engineID;
     }
+
+
+
+
 }
